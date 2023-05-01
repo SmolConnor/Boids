@@ -56,8 +56,10 @@ public class BoidAgent : MonoBehaviour
         {
             vcentre = vcentre / groupSize;
             speed = gSpeed / groupSize;
-            Vector2 direction2 = (vcentre + vavoid) - transform.position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction2), Boidtest.boidManager.rotation * Time.deltaTime);
+            Vector3 direction2 = (vcentre + vavoid) - transform.position;
+            
+            
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, direction2), Boidtest.boidManager.rotation * Time.deltaTime);
         }
     }
 }
