@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoidAgent : MonoBehaviour
 {
     float speed;
+    bool turning = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +19,24 @@ public class BoidAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        ApplyRules();
+        Bounds b = new Bounds(Boidtest.boidManager.transform.position, Boidtest.boidManager.spawnLimits * 2);
+        if (!b.Contains(transform.position))
+        {
+            turning = true;
+        }
+        else
+        {
+            turning = false;
+        }
+        if (turning == true)
+        {
+            Vector3 direction = Boidtest.boidManager.transform.position - transform.position;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, direction), Boidtest.boidManager.rotation * Time.deltaTime);
+        }
+        else
+        {
+            ApplyRules();
+        }
         this.transform.Translate(0, speed*Time.deltaTime, 0);
       
         
