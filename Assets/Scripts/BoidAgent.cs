@@ -6,19 +6,31 @@ public class BoidAgent : MonoBehaviour
 {
     float speed;
     bool turning = false;
+    public Collider2D fishcollider;
     // Start is called before the first frame update
     void Start()
     {
+
         speed = Random.Range(Boidtest.boidManager.minSpeed, Boidtest.boidManager.maxSpeed);
     }
 
-
-
-  
-
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter2D(Collider2D  col)
     {
+        if(col.gameObject.CompareTag(("food")))
+        {
+            Destroy(col.gameObject);
+            Boidtest.boidManager.isfood = false;
+        }
+    
+    
+    }
+
+
+        // Update is called once per frame
+        void Update()
+    {
+        GameObject[] AI;
+        AI = Boidtest.boidManager.boids;
         Bounds b = new Bounds(Boidtest.boidManager.transform.position, Boidtest.boidManager.spawnLimits * 2);
         if (!b.Contains(transform.position))
         {
@@ -35,11 +47,15 @@ public class BoidAgent : MonoBehaviour
         }
         else
         {
-            ApplyRules();
+            if (Random.Range(0, 100) < 10)
+            {
+
+
+                ApplyRules();
+            }
         }
-        this.transform.Translate(0, speed*Time.deltaTime, 0);
-      
-        
+        this.transform.Translate(0, speed * Time.deltaTime, 0);
+       
     }
     void ApplyRules()
     {
@@ -71,7 +87,14 @@ public class BoidAgent : MonoBehaviour
         }
         if (groupSize > 0)
         {
-            vcentre = vcentre / groupSize;
+            if (Boidtest.boidManager.isfood == true)
+            {
+                vcentre = vcentre / groupSize + ((Vector3)Boidtest.boidManager.foodpos - this.transform.position); //+ ((Vector3)Boidtest.boidManager.food - this.transform.position)
+            }
+            else
+                vcentre = vcentre / groupSize;
+
+
             speed = gSpeed / groupSize;
             Vector3 direction2 = (vcentre + vavoid) - transform.position;
             
