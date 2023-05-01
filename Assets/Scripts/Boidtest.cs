@@ -13,6 +13,7 @@ public class Boidtest : MonoBehaviour
     public Vector2 spawnLimits = new Vector2(5, 5);
     public Vector2 foodpos = Vector2.zero;
     public bool isfood = false;
+    public int foodEaten = 0;
     public GameObject food;
     [Header("the boys")]
     [Range(0.0f, 10.0f)]
@@ -49,6 +50,12 @@ public class Boidtest : MonoBehaviour
                 Instantiate(food, foodpos, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
                 isfood = true;
             }
+        }
+        if(foodEaten >= 3)
+        {
+            Vector2 pos = (Vector2)this.transform.position + new Vector2(Random.Range(-spawnLimits.x, spawnLimits.x), Random.Range(-spawnLimits.y, spawnLimits.y));
+            Instantiate(boidAgent, pos, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+            foodEaten -= 3;
         }
     }
 }

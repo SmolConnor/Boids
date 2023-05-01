@@ -7,6 +7,7 @@ public class BoidAgent : MonoBehaviour
     float speed;
     bool turning = false;
     public Collider2D fishcollider;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,7 @@ public class BoidAgent : MonoBehaviour
         {
             Destroy(col.gameObject);
             Boidtest.boidManager.isfood = false;
+            Boidtest.boidManager.foodEaten++;
         }
     
     
