@@ -8,6 +8,7 @@ public class Boidtest : MonoBehaviour
     public GameObject boidAgent;
     public int numBoid;
     public static Boidtest boidManager;
+    public Vector3 randomrotation;
     public float spaceBetween = 1.5f;
     public Vector2 spawnLimits = new Vector2(5, 5);
     [Header("the boys")]
@@ -23,11 +24,12 @@ public class Boidtest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        randomrotation = new Vector3(0, 0, Random.Range(-180, 180));
         boids = new GameObject[numBoid];
         for (int i = 0; i < numBoid; i++)
         {
             Vector2 pos = (Vector2)this.transform.position + new Vector2(Random.Range(-spawnLimits.x, spawnLimits.x), Random.Range(-spawnLimits.y, spawnLimits.y));
-            boids[i] = Instantiate(boidAgent, pos, this.transform.rotation);
+            boids[i] = Instantiate(boidAgent, pos, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         }
         boidManager = this;
     }
