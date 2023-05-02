@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 58f4d1b223fbfc34195308324f093a8a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6b426063e00aa704b925a7afa088865d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,9 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishcollider: {fileID: 6532421940743405699}
-  predator: {fileID: 6799229932280921510, guid: f8851708cf51687439f7d2d439f9e154, type: 3}
-  predatorRange: 5
-  predatorInRange: 0
+  fishSprite: {fileID: 8994713069816011055}
 --- !u!58 &6532421940743405699
 CircleCollider2D:
   m_ObjectHideFlags: 0

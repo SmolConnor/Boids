@@ -7,11 +7,12 @@ public class BoidAgent : MonoBehaviour
     float speed;
     bool turning = false;
     public Collider2D fishcollider;
+    public SpriteRenderer fishSprite;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        fishSprite.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
         speed = Random.Range(Boidtest.boidManager.minSpeed, Boidtest.boidManager.maxSpeed);
     }
 
