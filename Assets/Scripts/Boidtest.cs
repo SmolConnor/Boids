@@ -13,8 +13,10 @@ public class Boidtest : MonoBehaviour
     public Vector2 spawnLimits = new Vector2(5, 5);
     public Vector2 foodpos = Vector2.zero;
     public bool isfood = false;
+    public bool anglerfish = false;
     public int foodEaten = 0;
     public GameObject food;
+    public GameObject anglerfishGO;
     [Header("the boys")]
     [Range(0.0f, 10.0f)]
     public float minSpeed;
@@ -50,6 +52,14 @@ public class Boidtest : MonoBehaviour
                 Instantiate(food, foodpos, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
                 isfood = true;
             }
+            //if (anglerfish == false)
+           // {
+               // if (Random.Range(0, 100) < 10)
+               // {
+                   // Vector2 pos = (Vector2)this.transform.position + new Vector2(Random.Range(-spawnLimits.x, spawnLimits.x), Random.Range(-spawnLimits.y, spawnLimits.y));
+                    //Instantiate(anglerfishGO, pos, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+               // }
+           // }
         }
         if(foodEaten >= 3)
         {

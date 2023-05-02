@@ -2,39 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoidAgent : MonoBehaviour
+public class Predator : MonoBehaviour
 {
     public float speed;
     bool turning = false;
-    //bool running = false;
-    public Collider2D fishcollider;
-    public SpriteRenderer fishSprite;
-    public GameObject anglerfish;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        fishSprite.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-        speed = Random.Range(Boidtest.boidManager.minSpeed, Boidtest.boidManager.maxSpeed);
-        
+
+        float maxSpeed = Boidtest.boidManager.maxSpeed;
+        speed = maxSpeed;
     }
 
-    void OnTriggerEnter2D(Collider2D  col)
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.CompareTag(("food")))
+        if (col.gameObject.CompareTag(("food")))
         {
             Destroy(col.gameObject);
             Boidtest.boidManager.isfood = false;
             Boidtest.boidManager.foodEaten++;
         }
-    
-    
+
+
     }
 
 
-        // Update is called once per frame
-        void Update()
-        {
+    // Update is called once per frame
+    void Update()
+    {
         GameObject[] AI;
         AI = Boidtest.boidManager.boids;
         Bounds b = new Bounds(Boidtest.boidManager.transform.position, Boidtest.boidManager.spawnLimits * 2);
@@ -59,14 +56,10 @@ public class BoidAgent : MonoBehaviour
 
                 ApplyRules();
             }
-            
         }
-    
-            this.transform.Translate(0, speed * Time.deltaTime, 0);
-        
-     
-       
-        }
+        this.transform.Translate(0, speed * Time.deltaTime, 0);
+
+    }
     void ApplyRules()
     {
         Vector3 vcentre = Vector3.zero;
@@ -107,8 +100,8 @@ public class BoidAgent : MonoBehaviour
 
             speed = gSpeed / groupSize;
             Vector3 direction2 = (vcentre + vavoid) - transform.position;
-            
-            
+
+
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, direction2), Boidtest.boidManager.rotation * Time.deltaTime);
         }
     }

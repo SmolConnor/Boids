@@ -2,39 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoidAgent : MonoBehaviour
+public class Anglerfish : MonoBehaviour
 {
-    public float speed;
+    float speed = 0;
     bool turning = false;
-    //bool running = false;
-    public Collider2D fishcollider;
-    public SpriteRenderer fishSprite;
-    public GameObject anglerfish;
-
+    public bool waiting = true;
+    public static Anglerfish Baddie;
     // Start is called before the first frame update
     void Start()
     {
-        fishSprite.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-        speed = Random.Range(Boidtest.boidManager.minSpeed, Boidtest.boidManager.maxSpeed);
-        
+        speed = (float)Boidtest.boidManager.maxSpeed;
+        Baddie = this;
     }
 
-    void OnTriggerEnter2D(Collider2D  col)
+    // Update is called once per frame
+    void Update()
     {
-        if(col.gameObject.CompareTag(("food")))
-        {
-            Destroy(col.gameObject);
-            Boidtest.boidManager.isfood = false;
-            Boidtest.boidManager.foodEaten++;
-        }
-    
-    
-    }
-
-
-        // Update is called once per frame
-        void Update()
-        {
         GameObject[] AI;
         AI = Boidtest.boidManager.boids;
         Bounds b = new Bounds(Boidtest.boidManager.transform.position, Boidtest.boidManager.spawnLimits * 2);
@@ -53,20 +36,18 @@ public class BoidAgent : MonoBehaviour
         }
         else
         {
-            if (Random.Range(0, 100) < 10)
-            {
+            
+            
 
 
                 ApplyRules();
-            }
             
         }
-    
+        if (waiting == false)
+        {
             this.transform.Translate(0, speed * Time.deltaTime, 0);
-        
-     
-       
         }
+    }
     void ApplyRules()
     {
         Vector3 vcentre = Vector3.zero;
@@ -89,6 +70,10 @@ public class BoidAgent : MonoBehaviour
                     {
                         vavoid = vavoid + (this.transform.position - boy.transform.position);
                     }
+                    if (distance < 2.0f)
+                    {
+                        waiting = false;
+                    }
 
                     BoidAgent otheAgent = boy.GetComponent<BoidAgent>();
                     gSpeed = gSpeed + otheAgent.speed;
@@ -97,18 +82,14 @@ public class BoidAgent : MonoBehaviour
         }
         if (groupSize > 0)
         {
-            if (Boidtest.boidManager.isfood == true)
-            {
-                vcentre = vcentre / groupSize + ((Vector3)Boidtest.boidManager.foodpos - this.transform.position); //+ ((Vector3)Boidtest.boidManager.food - this.transform.position)
-            }
-            else
+          
                 vcentre = vcentre / groupSize;
 
 
             speed = gSpeed / groupSize;
             Vector3 direction2 = (vcentre + vavoid) - transform.position;
-            
-            
+
+
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, direction2), Boidtest.boidManager.rotation * Time.deltaTime);
         }
     }
