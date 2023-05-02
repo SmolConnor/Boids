@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class BoidAgent : MonoBehaviour
 {
-    public float speed;
+    float speed;
     bool turning = false;
-    //bool running = false;
     public Collider2D fishcollider;
     public SpriteRenderer fishSprite;
-    public GameObject anglerfish;
 
     // Start is called before the first frame update
     void Start()
     {
         fishSprite.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
         speed = Random.Range(Boidtest.boidManager.minSpeed, Boidtest.boidManager.maxSpeed);
-        
     }
 
     void OnTriggerEnter2D(Collider2D  col)
@@ -34,7 +31,7 @@ public class BoidAgent : MonoBehaviour
 
         // Update is called once per frame
         void Update()
-        {
+    {
         GameObject[] AI;
         AI = Boidtest.boidManager.boids;
         Bounds b = new Bounds(Boidtest.boidManager.transform.position, Boidtest.boidManager.spawnLimits * 2);
@@ -59,14 +56,10 @@ public class BoidAgent : MonoBehaviour
 
                 ApplyRules();
             }
-            
         }
-    
-            this.transform.Translate(0, speed * Time.deltaTime, 0);
-        
-     
+        this.transform.Translate(0, speed * Time.deltaTime, 0);
        
-        }
+    }
     void ApplyRules()
     {
         Vector3 vcentre = Vector3.zero;
